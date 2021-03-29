@@ -1,19 +1,16 @@
-#include <Servo.h>
+#include <Servo.h> // you must download zip file, and include it on arduino ide
 
-Servo myservo; // create servo object to control a servo
-
-int potpin = 0; // analog pin used to connect the potentiometer
-int val; // variable to read the value from the analog pin
-
-void setup()
-{
-myservo.attach(9); // attaches the servo on pin 9 to the servo object
+Servo myservo; 
+void setup() { 
+   Servo1.attach(9); //connect servo to pin 9
 }
+void loop() { 
+   myservo.write(0); // Make servo go to 0 degrees 
+   delay(1000); 
 
-void loop()
-{
-val = analogRead(potpin); // reads the value of the potentiometer (value between 0 and 1023)
-val = map(val, 0, 1023, 0, 179); // scale it to use it with the servo (value between 0 and 180)
-myservo.write(val); // sets the servo position according to the scaled value
-delay(15); // waits for the servo to get there
+   myservo.write(90); // Make servo go to 90 degrees 
+   delay(1000); 
+ 
+   myservo.write(180); // Make servo go to 180 degrees 
+   delay(1000); 
 }
