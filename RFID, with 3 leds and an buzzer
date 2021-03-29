@@ -8,13 +8,14 @@ int blue = 5; // connect blue, or any other color you want to pin 5
 int yellow = 4; // connect yellow, or any other color you want to pin 4
 int red = 2; // connect red, or any other color you want to pin 2
 
-MFRC522 mfrc522(NSS_PIN, RST_PIN);
-void setup() 
-{
-  Serial.begin(9600);   // Initiate a serial communication
-  SPI.begin();      // Initiate SPI bus
-  mfrc522.PCD_Init();   // Initiate MFRC522
-  pinMode(buzzer, OUTPUT); //pin modes
+MFRC522 mfrc522(NSS_PIN, RST_PIN); // set up pins in package
+
+void setup() {
+  Serial.begin(9600); // Initiate a serial communication
+  SPI.begin();  // Initiate SPI bus
+  mfrc522.PCD_Init(); // Initiate MFRC522
+  
+  pinMode(buzzer, OUTPUT); // pin modes
   pinMode(blue, OUTPUT);
   pinMode(yellow, OUTPUT);
   pinMode(red, OUTPUT);
@@ -25,8 +26,7 @@ void setup()
   Serial.println("Put your card to the reader...");
   Serial.println();
 }
-void loop() 
-{
+void loop() {
 
   if ( ! mfrc522.PICC_IsNewCardPresent()) {
     return;
@@ -38,18 +38,18 @@ void loop()
   Serial.print("Tag:");
   String content= "";
   byte letter;
-  for (byte i = 0; i < mfrc522.uid.size; i++) 
-  {
+  for (byte i = 0; i < mfrc522.uid.size; i++) {
      Serial.print(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " ");
      Serial.print(mfrc522.uid.uidByte[i], HEX);
      content.concat(String(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " "));
      content.concat(String(mfrc522.uid.uidByte[i], HEX));
   }
+  
   Serial.println();
   Serial.print("Message: ");
   content.toUpperCase();
-  if (content.substring(1) == "Your card tag, if u apply card to rfid module, check serial monitor" ) 
-  {
+  
+  if (content.substring(1) == "Your card tag, if u apply card to rfid module, check serial monitor" ) {
     Serial.println("Activated");
     Serial.println();
     digitalWrite(red, HIGH);
@@ -64,8 +64,7 @@ void loop()
     delay(3850);
     digitalWrite(red, LOW);
     digitalWrite(blue, HIGH);
-  }
-  else { //any other card
+  } else { //any other card
     Serial.println("Access denied"); 
     Serial.println();
     digitalWrite(yellow, HIGH);
