@@ -1,29 +1,25 @@
-int Sensor = 10; // Declaration of the sensor input pinMode
-int led = 11;
+int Sensor = 10; //connect OUT to pin 10
+int led = 11; //connect led to pin 11, or any you want
 
-void setup ()
-{
-  Serial.begin(9600); // Initialization serial output
-  pinMode (Sensor, INPUT) ; // Initialization sensor pin
+void setup () {
+  Serial.begin(9600); //start serial monitor
+  pinMode(Sensor, INPUT) ; //pin modes
   pinMode(led, OUTPUT);
 }
-   
-// The program reads the status of the sensor pins
-// shows via serial terminal if the linetracker is on the line or not
+  
 void loop ()
 {
-  bool val = digitalRead (Sensor) ; // The current signal of the sensor will be read
-   
-  if (val == HIGH) // If a signal is detected the LED will light up.
+  bool val = digitalRead(Sensor) ; //read signal
+  
+  if (val == HIGH) // if detecting white, then led goes off
   {
-    Serial.println("LineTracker is on the line");
+    Serial.println("Tracker is not on the line");
     digitalWrite(led, LOW);
-  }
-  else
+  } else //if detecting black, then run led
   {
-    Serial.println("Linetracker is not on the line");
+    Serial.println("Tracker is on the line");
     digitalWrite(led, HIGH);
   }
   Serial.println("------------------------------------");
-  delay(500); // Break of 500ms between the measurements 
+  delay(500); //delay 500ms
 }
